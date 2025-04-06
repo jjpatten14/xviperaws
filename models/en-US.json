@@ -1,0 +1,199 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "x viper",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "LockVehicleIntent",
+          "slots": [],
+          "samples": [
+            "lock my car",
+            "lock the car",
+            "lock my vehicle",
+            "lock the vehicle",
+            "secure my car",
+            "secure my vehicle",
+            "lock it",
+            "lock the doors"
+          ]
+        },
+        {
+          "name": "UnlockVehicleIntent",
+          "slots": [],
+          "samples": [
+            "unlock my car",
+            "unlock the car",
+            "unlock my vehicle",
+            "unlock the vehicle",
+            "open my car",
+            "unlock it",
+            "unlock the doors"
+          ]
+        },
+        {
+          "name": "StartEngineIntent",
+          "slots": [],
+          "samples": [
+            "start my car",
+            "start my vehicle",
+            "start the car",
+            "start the engine",
+            "turn on my car",
+            "remote start",
+            "start engine"
+          ]
+        },
+        {
+          "name": "StopEngineIntent",
+          "slots": [],
+          "samples": [
+            "stop my car",
+            "stop my vehicle",
+            "stop the car",
+            "turn off my car",
+            "turn off the engine",
+            "stop the engine",
+            "kill the engine"
+          ]
+        },
+        {
+          "name": "OpenTrunkIntent",
+          "slots": [],
+          "samples": [
+            "open my trunk",
+            "open the trunk",
+            "pop the trunk",
+            "unlock the trunk",
+            "release the trunk"
+          ]
+        },
+        {
+          "name": "LoginIntent",
+          "slots": [
+            {
+              "name": "username",
+              "type": "AMAZON.EmailAddress"
+            },
+            {
+              "name": "password",
+              "type": "AMAZON.AlphaNumeric"
+            }
+          ],
+          "samples": [
+            "login with username {username} and password {password}",
+            "sign in with username {username} and password {password}",
+            "login with my account",
+            "sign in with my account",
+            "connect my account"
+          ]
+        },
+        {
+          "name": "SetDefaultVehicleIntent",
+          "slots": [
+            {
+              "name": "vehicleName",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
+          "samples": [
+            "set default vehicle to {vehicleName}",
+            "set my default car to {vehicleName}",
+            "make {vehicleName} my default vehicle",
+            "use {vehicleName} as my default",
+            "set default vehicle",
+            "set my default car"
+          ]
+        },
+        {
+          "name": "ListVehiclesIntent",
+          "slots": [],
+          "samples": [
+            "list my vehicles",
+            "list my cars",
+            "what vehicles do I have",
+            "what cars are connected",
+            "show my vehicles",
+            "show my cars"
+          ]
+        }
+      ],
+      "types": []
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "LoginIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "username",
+              "type": "AMAZON.EmailAddress",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.LoginIntent.username"
+              }
+            },
+            {
+              "name": "password",
+              "type": "AMAZON.AlphaNumeric",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.LoginIntent.password"
+              }
+            }
+          ]
+        },
+        {
+          "name": "SetDefaultVehicleIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "vehicleName",
+              "type": "AMAZON.SearchQuery",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.LoginIntent.username",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Please tell me your username or email address for your X Viper account."
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.LoginIntent.password",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "What is your password? For security, it's better to link your account through the Alexa app instead."
+          }
+        ]
+      }
+    ]
+  }
+}

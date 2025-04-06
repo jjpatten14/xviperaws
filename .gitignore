@@ -1,0 +1,24 @@
+# Ignore sensitive files
+**/node_modules/
+**/*.zip
+**/package-lock.json
+**/deployment*.zip
+*credentials*.txt
+**/test-login.js
+**/lambda_logs.txt
+**/logcat.txt
+
+# Ignore temporary files
+**/temp_lambda_code/
+**/*.tmp
+
+# Ignore AWS backend files that might contain credentials
+**/privacy-bucket-info.txt
+**/bucket-policy.json
+**/website-config.json
+
+# Ignore local config files that might contain sensitive data
+**/*config.txt
+
+# Ignore AWS Lambda deployment packages
+**/*-deployment.zip

@@ -1,0 +1,56 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "Control your Viper-connected vehicle using voice commands",
+          "examplePhrases": [
+            "Alexa, ask X Viper to lock my car",
+            "Alexa, tell X Viper to start my engine",
+            "Alexa, ask X Viper to unlock my car"
+          ],
+          "keywords": [
+            "car",
+            "vehicle",
+            "viper",
+            "control",
+            "remote",
+            "start",
+            "lock"
+          ],
+          "name": "X Viper Control",
+          "description": "Control your Viper-connected vehicle using voice commands. Lock, unlock, start the engine, stop the engine, and open the trunk with simple voice commands.",
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/7762/5c83aba4722b40e2acbedb941392a343/APP_ICON?versionId=Ug4vAHvmXtPOQKt6GOdVbW.0Q5kAAB2k&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210813T190404Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHKTZSBGC%2F20210813%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c33f0924c4c9b8d6b0ca6b22d1b9e8e9c1e6afde34d3025b9a87ac0bdda3ac17",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/48c9/b784f648927b48d2b37c2a4fa1d2e57e/APP_ICON_LARGE?versionId=9kj9FpmXlGwrNamAZ6z0dI99SCPB.mT3&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20210813T190404Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAWBV6LQ4QHKTZSBGC%2F20210813%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=ef1a75c4f4a6b8b0957d9d7a7ef6f8b9eacbf7e3b0f9e8d7c6b5a4d3c2b1a0f9"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Account linking is required to use this skill. Users need to provide their Viper account credentials.",
+      "category": "CONNECTED_CAR",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:XXXXXXXXXXXX:function:xviper-alexa-skill"
+        },
+        "interfaces": []
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [],
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "https://www.example.com/privacy-policy",
+          "termsOfUseUrl": "https://www.example.com/terms-of-use"
+        }
+      },
+      "isExportCompliant": true,
+      "containsAds": false,
+      "isChildDirected": false,
+      "usesPersonalInfo": true
+    }
+  }
+}

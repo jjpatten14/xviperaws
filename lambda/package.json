@@ -1,0 +1,16 @@
+{
+  "name": "xviper-alexa-skill",
+  "version": "1.0.0",
+  "description": "Alexa skill for controlling Viper car security systems",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ask-sdk-core": "^2.12.1",
+    "aws-sdk": "^2.1102.0",
+    "axios": "^0.26.1"
+  }
+}

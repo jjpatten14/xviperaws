@@ -1,0 +1,47 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "name": "X Viper",
+          "summary": "Control your Viper vehicle with your voice",
+          "description": "Use your voice to control your Viper-equipped vehicle. Lock, unlock, start the engine, and more.",
+          "examplePhrases": [
+            "Alexa, ask X Viper to lock my car",
+            "Alexa, ask X Viper to start my car",
+            "Alexa, ask X Viper to unlock my car"
+          ],
+          "smallIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/icons/app_icon_small.png",
+          "largeIconUri": "https://s3.amazonaws.com/CAPS-SSE/echo_developer/icons/app_icon_large.png"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Say 'Alexa, ask X Viper to lock my car' or 'Alexa, ask X Viper to start my car'",
+      "category": "AUTOMOTIVE",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:965239903867:function:xviper-alexa-skill"
+        },
+        "interfaces": []
+      }
+    },
+    "manifestVersion": "1.0",
+    "permissions": [],
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "locales": {
+        "en-US": {
+          "privacyPolicyUrl": "https://example.com/privacy",
+          "termsOfUseUrl": "https://example.com/terms"
+        }
+      },
+      "isExportCompliant": true,
+      "isChildDirected": false,
+      "usesPersonalInfo": false,
+      "containsAds": false
+    }
+  }
+}

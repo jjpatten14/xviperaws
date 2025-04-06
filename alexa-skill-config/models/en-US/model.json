@@ -1,0 +1,85 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "x viper",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "LockVehicleIntent",
+          "slots": [],
+          "samples": [
+            "lock the doors",
+            "lock my doors",
+            "lock the car",
+            "lock my car",
+            "lock my vehicle",
+            "lock the vehicle"
+          ]
+        },
+        {
+          "name": "UnlockVehicleIntent",
+          "slots": [],
+          "samples": [
+            "unlock the doors",
+            "unlock my doors",
+            "unlock the car",
+            "unlock my car",
+            "unlock my vehicle",
+            "unlock the vehicle"
+          ]
+        },
+        {
+          "name": "StartEngineIntent",
+          "slots": [],
+          "samples": [
+            "start my car engine",
+            "start my engine",
+            "start the engine",
+            "start my car",
+            "start the car",
+            "start my vehicle",
+            "start the vehicle"
+          ]
+        },
+        {
+          "name": "StopEngineIntent",
+          "slots": [],
+          "samples": [
+            "stop my car engine",
+            "stop my engine",
+            "stop the engine",
+            "stop my car",
+            "stop the car",
+            "stop my vehicle",
+            "stop the vehicle",
+            "turn off my car",
+            "turn off my engine"
+          ]
+        },
+        {
+          "name": "OpenTrunkIntent",
+          "slots": [],
+          "samples": [
+            "open my trunk",
+            "open the trunk",
+            "pop the trunk",
+            "open trunk",
+            "pop trunk"
+          ]
+        }
+      ],
+      "types": []
+    }
+  }
+}

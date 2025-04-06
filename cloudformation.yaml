@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CloudFormation template for X Viper Alexa Skill resources'
+
+Resources:
+  # DynamoDB Table for User Mappings
+  XviperUserMappings:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: XviperUserMappings
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: alexaUserId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: alexaUserId
+          KeyType: HASH
+      SSESpecification:
+        SSEEnabled: true
+
+  # IAM Role for Lambda Function
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: lambda-xviper-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: XviperLambdaPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                Resource: !GetAtt XviperUserMappings.Arn
+              - Effect: Allow
+                Action:
+                  - secretsmanager:CreateSecret
+                  - secretsmanager:GetSecretValue
+                  - secretsmanager:UpdateSecret
+                Resource: '*'
+
+  # S3 Bucket for Lambda Code
+  LambdaCodeBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'xviper-lambda-code-965239903867'
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  # Lambda Function
+  XviperAlexaSkillFunction:
+    Type: AWS::Lambda::Function
+    DependsOn: LambdaCodeBucket
+    Properties:
+      FunctionName: xviper-alexa-skill
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        S3Bucket: !Ref LambdaCodeBucket
+        S3Key: deployment.zip  # Make sure to upload deployment.zip to S3 before deploying this template
+      Runtime: nodejs16.x
+      Timeout: 10
+      MemorySize: 256
+      Environment:
+        Variables:
+          USER_MAPPING_TABLE: !Ref XviperUserMappings
+
+Outputs:
+  LambdaFunctionArn:
+    Description: ARN of the Lambda function
+    Value: !GetAtt XviperAlexaSkillFunction.Arn
+  
+  DynamoDBTableName:
+    Description: Name of the DynamoDB table
+    Value: !Ref XviperUserMappings
+  
+  S3BucketName:
+    Description: Name of the S3 bucket for Lambda code
+    Value: !Ref LambdaCodeBucket

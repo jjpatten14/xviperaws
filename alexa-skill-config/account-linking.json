@@ -1,0 +1,13 @@
+{
+  "accountLinkingRequest": {
+    "skipOnEnablement": false,
+    "type": "AUTH_CODE",
+    "authorizationUrl": "https://xviper-auth.auth.us-east-1.amazoncognito.com/oauth2/authorize",
+    "accessTokenUrl": "https://xviper-auth.auth.us-east-1.amazoncognito.com/oauth2/token",
+    "clientId": "6ejq4pqebjkn5qasg82roeomgr",
+    "scopes": ["openid", "profile", "email"],
+    "accessTokenScheme": "HTTP_BASIC",
+    "clientSecret": "1nf8ps85mff3jcivdbrr425f4nibimqcsmofeh49utqu30dkeuui",
+    "domains": ["amazoncognito.com", "xviper-auth.auth.us-east-1.amazoncognito.com"]
+  }
+}
