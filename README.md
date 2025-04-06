@@ -1,358 +1,129 @@
-# Form-Data [![NPM Module](https://img.shields.io/npm/v/form-data.svg)](https://www.npmjs.com/package/form-data) [![Join the chat at https://gitter.im/form-data/form-data](http://form-data.github.io/images/gitterbadge.svg)](https://gitter.im/form-data/form-data)
+# X Viper Alexa Skill
 
-A library to create readable ```"multipart/form-data"``` streams. Can be used to submit forms and file uploads to other web applications.
+This repository contains all the code and configuration needed to create and deploy an Alexa skill that controls Viper-equipped vehicles using voice commands.
 
-The API of this library is inspired by the [XMLHttpRequest-2 FormData Interface][xhr2-fd].
+![Viper Logo](https://www.viper.com/images/logo.png)
 
-[xhr2-fd]: http://dev.w3.org/2006/webapi/XMLHttpRequest-2/Overview.html#the-formdata-interface
+## Features
 
-[![Linux Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=linux:6.x-12.x)](https://travis-ci.org/form-data/form-data)
-[![MacOS Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=macos:6.x-12.x)](https://travis-ci.org/form-data/form-data)
-[![Windows Build](https://img.shields.io/travis/form-data/form-data/master.svg?label=windows:6.x-12.x)](https://travis-ci.org/form-data/form-data)
+- **Control Your Vehicle with Voice**: Lock, unlock, start/stop engine, open trunk
+- **AWS Serverless Architecture**: Uses Lambda functions, DynamoDB, and S3
+- **Secure Authentication**: Integrates with Amazon Cognito for secure credential management
+- **One-Click Deployment**: Complete automated setup scripts for Windows
 
-[![Coverage Status](https://img.shields.io/coveralls/form-data/form-data/master.svg?label=code+coverage)](https://coveralls.io/github/form-data/form-data?branch=master)
-[![Dependency Status](https://img.shields.io/david/form-data/form-data.svg)](https://david-dm.org/form-data/form-data)
+## 🚗 Voice Commands
 
-## Install
+After setup, you can use these commands with your Alexa device:
 
-```
-npm install --save form-data
-```
+- "Alexa, ask X Viper to lock my car"
+- "Alexa, ask X Viper to unlock my car"
+- "Alexa, ask X Viper to start my engine"
+- "Alexa, ask X Viper to stop my engine"
+- "Alexa, ask X Viper to open my trunk"
+- "Alexa, ask X Viper to list my vehicles"
 
-## Usage
+## 🔧 Quick Start
 
-In this example we are constructing a form with 3 fields that contain a string,
-a buffer and a file stream.
+### Prerequisites
 
-``` javascript
-var FormData = require('form-data');
-var fs = require('fs');
+- Windows 10 or 11
+- AWS account with appropriate permissions
+- AWS CLI installed and configured
+- Node.js and npm installed
+- Viper Connect account with at least one connected vehicle
+- Amazon Developer account
 
-var form = new FormData();
-form.append('my_field', 'my value');
-form.append('my_buffer', new Buffer(10));
-form.append('my_file', fs.createReadStream('/foo/bar.jpg'));
-```
+### One-Click Setup
 
-Also you can use http-response stream:
+1. Clone this repository:
+   ```
+   git clone https://github.com/yourusername/xviper.git
+   cd xviper
+   ```
 
-``` javascript
-var FormData = require('form-data');
-var http = require('http');
+2. Run the one-click deployment script:
+   ```
+   one-click-recreate.bat
+   ```
 
-var form = new FormData();
+3. Follow the on-screen instructions to:
+   - Enter your Viper account credentials
+   - Create AWS resources
+   - Configure the Alexa skill
 
-http.request('http://nodejs.org/images/logo.png', function(response) {
-  form.append('my_field', 'my value');
-  form.append('my_buffer', new Buffer(10));
-  form.append('my_logo', response);
-});
-```
+4. Test your skill by saying "Alexa, ask X Viper to lock my car"
 
-Or @mikeal's [request](https://github.com/request/request) stream:
+## 📁 Repository Structure
 
-``` javascript
-var FormData = require('form-data');
-var request = require('request');
+- `/lambda` - Lambda function code for the Alexa skill
+- `/scripts` - PowerShell and Batch deployment scripts
+- `/models` - Alexa skill interaction model
+- `/alexa-skill-config` - Alexa skill configuration files
+- `/cloudformation.yaml` - AWS resource definitions
 
-var form = new FormData();
+## 🛠️ Manual Setup
 
-form.append('my_field', 'my value');
-form.append('my_buffer', new Buffer(10));
-form.append('my_logo', request('http://nodejs.org/images/logo.png'));
-```
+If you prefer to go through the setup process manually:
 
-In order to submit this form to a web application, call ```submit(url, [callback])``` method:
+1. Create AWS resources:
+   ```
+   .\scripts\1-create-bucket.bat
+   ```
 
-``` javascript
-form.submit('http://example.org/', function(err, res) {
-  // res – response object (http.IncomingMessage)  //
-  res.resume();
-});
+2. Deploy the Lambda function:
+   ```
+   .\scripts\2-create-lambda.bat
+   ```
 
-```
+3. Configure the Alexa skill:
+   ```
+   .\scripts\2-deploy-skill.bat
+   ```
 
-For more advanced request manipulations ```submit()``` method returns ```http.ClientRequest``` object, or you can choose from one of the alternative submission methods.
+4. Complete the setup in the Alexa Developer Console using the provided instructions
 
-### Custom options
+## 🔒 Security
 
-You can provide custom options, such as `maxDataSize`:
+- All credentials are securely stored in AWS Cognito
+- API tokens are handled securely and temporarily cached
+- Communications with Viper API are encrypted
 
-``` javascript
-var FormData = require('form-data');
+## 🔍 Troubleshooting
 
-var form = new FormData({ maxDataSize: 20971520 });
-form.append('my_field', 'my value');
-form.append('my_buffer', /* something big */);
-```
+If you encounter issues during setup:
 
-List of available options could be found in [combined-stream](https://github.com/felixge/node-combined-stream/blob/master/lib/combined_stream.js#L7-L15)
+1. Check AWS permissions and configuration:
+   ```
+   .\scripts\check-aws-config.bat
+   ```
 
-### Alternative submission methods
+2. Review Cognito setup:
+   ```
+   .\scripts\fix-cognito-permissions.bat
+   ```
 
-You can use node's http client interface:
+3. See the Lambda logs:
+   ```
+   .\scripts\check-lambda-logs.bat
+   ```
 
-``` javascript
-var http = require('http');
+For detailed troubleshooting, see [COGNITO_PERMISSIONS_FIX.md](COGNITO_PERMISSIONS_FIX.md).
 
-var request = http.request({
-  method: 'post',
-  host: 'example.org',
-  path: '/upload',
-  headers: form.getHeaders()
-});
-
-form.pipe(request);
-
-request.on('response', function(res) {
-  console.log(res.statusCode);
-});
-```
-
-Or if you would prefer the `'Content-Length'` header to be set for you:
-
-``` javascript
-form.submit('example.org/upload', function(err, res) {
-  console.log(res.statusCode);
-});
-```
-
-To use custom headers and pre-known length in parts:
-
-``` javascript
-var CRLF = '\r\n';
-var form = new FormData();
-
-var options = {
-  header: CRLF + '--' + form.getBoundary() + CRLF + 'X-Custom-Header: 123' + CRLF + CRLF,
-  knownLength: 1
-};
-
-form.append('my_buffer', buffer, options);
-
-form.submit('http://example.com/', function(err, res) {
-  if (err) throw err;
-  console.log('Done');
-});
-```
-
-Form-Data can recognize and fetch all the required information from common types of streams (```fs.readStream```, ```http.response``` and ```mikeal's request```), for some other types of streams you'd need to provide "file"-related information manually:
-
-``` javascript
-someModule.stream(function(err, stdout, stderr) {
-  if (err) throw err;
-
-  var form = new FormData();
-
-  form.append('file', stdout, {
-    filename: 'unicycle.jpg', // ... or:
-    filepath: 'photos/toys/unicycle.jpg',
-    contentType: 'image/jpeg',
-    knownLength: 19806
-  });
-
-  form.submit('http://example.com/', function(err, res) {
-    if (err) throw err;
-    console.log('Done');
-  });
-});
-```
-
-The `filepath` property overrides `filename` and may contain a relative path. This is typically used when uploading [multiple files from a directory](https://wicg.github.io/entries-api/#dom-htmlinputelement-webkitdirectory).
-
-For edge cases, like POST request to URL with query string or to pass HTTP auth credentials, object can be passed to `form.submit()` as first parameter:
-
-``` javascript
-form.submit({
-  host: 'example.com',
-  path: '/probably.php?extra=params',
-  auth: 'username:password'
-}, function(err, res) {
-  console.log(res.statusCode);
-});
-```
-
-In case you need to also send custom HTTP headers with the POST request, you can use the `headers` key in first parameter of `form.submit()`:
-
-``` javascript
-form.submit({
-  host: 'example.com',
-  path: '/surelynot.php',
-  headers: {'x-test-header': 'test-header-value'}
-}, function(err, res) {
-  console.log(res.statusCode);
-});
-```
-
-### Methods
-
-- [_Void_ append( **String** _field_, **Mixed** _value_ [, **Mixed** _options_] )](https://github.com/form-data/form-data#void-append-string-field-mixed-value--mixed-options-).
-- [_Headers_ getHeaders( [**Headers** _userHeaders_] )](https://github.com/form-data/form-data#array-getheaders-array-userheaders-)
-- [_String_ getBoundary()](https://github.com/form-data/form-data#string-getboundary)
-- [_Void_ setBoundary()](https://github.com/form-data/form-data#void-setboundary)
-- [_Buffer_ getBuffer()](https://github.com/form-data/form-data#buffer-getbuffer)
-- [_Integer_ getLengthSync()](https://github.com/form-data/form-data#integer-getlengthsync)
-- [_Integer_ getLength( **function** _callback_ )](https://github.com/form-data/form-data#integer-getlength-function-callback-)
-- [_Boolean_ hasKnownLength()](https://github.com/form-data/form-data#boolean-hasknownlength)
-- [_Request_ submit( _params_, **function** _callback_ )](https://github.com/form-data/form-data#request-submit-params-function-callback-)
-- [_String_ toString()](https://github.com/form-data/form-data#string-tostring)
-
-#### _Void_ append( **String** _field_, **Mixed** _value_ [, **Mixed** _options_] )
-Append data to the form. You can submit about any format (string, integer, boolean, buffer, etc.). However, Arrays are not supported and need to be turned into strings by the user.
-```javascript
-var form = new FormData();
-form.append( 'my_string', 'my value' );
-form.append( 'my_integer', 1 );
-form.append( 'my_boolean', true );
-form.append( 'my_buffer', new Buffer(10) );
-form.append( 'my_array_as_json', JSON.stringify( ['bird','cute'] ) )
-```
-
-You may provide a string for options, or an object.
-```javascript
-// Set filename by providing a string for options
-form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), 'bar.jpg' );
-
-// provide an object.
-form.append( 'my_file', fs.createReadStream('/foo/bar.jpg'), {filename: 'bar.jpg', contentType: 'image/jpeg', knownLength: 19806} );
-```
-
-#### _Headers_ getHeaders( [**Headers** _userHeaders_] )
-This method adds the correct `content-type` header to the provided array of `userHeaders`.
-
-#### _String_ getBoundary()
-Return the boundary of the formData. By default, the boundary consists of 26 `-` followed by 24 numbers
-for example:
-```javascript
---------------------------515890814546601021194782
-```
-
-#### _Void_ setBoundary(String _boundary_)
-Set the boundary string, overriding the default behavior described above.
-
-_Note: The boundary must be unique and may not appear in the data._
-
-#### _Buffer_ getBuffer()
-Return the full formdata request package, as a Buffer. You can insert this Buffer in e.g. Axios to send multipart data.
-```javascript
-var form = new FormData();
-form.append( 'my_buffer', Buffer.from([0x4a,0x42,0x20,0x52,0x6f,0x63,0x6b,0x73]) );
-form.append( 'my_file', fs.readFileSync('/foo/bar.jpg') );
-
-axios.post( 'https://example.com/path/to/api',
-            form.getBuffer(),
-            form.getHeaders()
-          )
-```
-**Note:** Because the output is of type Buffer, you can only append types that are accepted by Buffer: *string, Buffer, ArrayBuffer, Array, or Array-like Object*. A ReadStream for example will result in an error.
-
-#### _Integer_ getLengthSync()
-Same as `getLength` but synchronous.
-
-_Note: getLengthSync __doesn't__ calculate streams length._
-
-#### _Integer_ getLength( **function** _callback_ )
-Returns the `Content-Length` async. The callback is used to handle errors and continue once the length has been calculated
-```javascript
-this.getLength(function(err, length) {
-  if (err) {
-    this._error(err);
-    return;
-  }
-
-  // add content length
-  request.setHeader('Content-Length', length);
-
-  ...
-}.bind(this));
-```
-
-#### _Boolean_ hasKnownLength()
-Checks if the length of added values is known.
-
-#### _Request_ submit( _params_, **function** _callback_ )
-Submit the form to a web application.
-```javascript
-var form = new FormData();
-form.append( 'my_string', 'Hello World' );
-
-form.submit( 'http://example.com/', function(err, res) {
-  // res – response object (http.IncomingMessage)  //
-  res.resume();
-} );
-```
-
-#### _String_ toString()
-Returns the form data as a string. Don't use this if you are sending files or buffers, use `getBuffer()` instead.
-
-### Integration with other libraries
-
-#### Request
-
-Form submission using  [request](https://github.com/request/request):
-
-```javascript
-var formData = {
-  my_field: 'my_value',
-  my_file: fs.createReadStream(__dirname + '/unicycle.jpg'),
-};
-
-request.post({url:'http://service.com/upload', formData: formData}, function(err, httpResponse, body) {
-  if (err) {
-    return console.error('upload failed:', err);
-  }
-  console.log('Upload successful!  Server responded with:', body);
-});
-```
-
-For more details see [request readme](https://github.com/request/request#multipartform-data-multipart-form-uploads).
-
-#### node-fetch
-
-You can also submit a form using [node-fetch](https://github.com/bitinn/node-fetch):
-
-```javascript
-var form = new FormData();
-
-form.append('a', 1);
-
-fetch('http://example.com', { method: 'POST', body: form })
-    .then(function(res) {
-        return res.json();
-    }).then(function(json) {
-        console.log(json);
-    });
-```
-
-#### axios
-
-In Node.js you can post a file using [axios](https://github.com/axios/axios):
-```javascript
-const form = new FormData();
-const stream = fs.createReadStream(PATH_TO_FILE);
-
-form.append('image', stream);
-
-// In Node.js environment you need to set boundary in the header field 'Content-Type' by calling method `getHeaders`
-const formHeaders = form.getHeaders();
-
-axios.post('http://example.com', form, {
-  headers: {
-    ...formHeaders,
-  },
-})
-.then(response => response)
-.catch(error => error)
-```
-
-## Notes
-
-- ```getLengthSync()``` method DOESN'T calculate length for streams, use ```knownLength``` options as workaround.
-- ```getLength(cb)``` will send an error as first parameter of callback if stream length cannot be calculated (e.g. send in custom streams w/o using ```knownLength```).
-- ```submit``` will not add `content-length` if form length is unknown or not calculable.
-- Starting version `2.x` FormData has dropped support for `node@0.10.x`.
-- Starting version `3.x` FormData has dropped support for `node@4.x`.
-
-## License
-
-Form-Data is released under the [MIT](License) license.
+## 📚 Documentation
+
+- [Deployment Summary](DEPLOYMENT_SUMMARY.md)
+- [Cognito Permissions Fix](COGNITO_PERMISSIONS_FIX.md)
+- [Testing Guide](TESTING_GUIDE.md)
+
+## 🤝 Contributing
+
+Contributions welcome! If you'd like to improve this project:
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
